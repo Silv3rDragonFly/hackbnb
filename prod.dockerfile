@@ -7,6 +7,11 @@ RUN npm install && npm run build
 # Setup Flask back-end
 FROM python:3
 
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+USER nonroot
+
 COPY --from=frontend /app/dist /var/www/html
 
 # Install Apache

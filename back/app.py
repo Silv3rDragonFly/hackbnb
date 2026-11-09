@@ -14,6 +14,8 @@ from api.uploads.uploads_api import uploads_api
 
 
 app = Flask(__name__)
+csrf = CSRFProtect()
+csrf.init_app(app)
 app.config.from_pyfile('config.py')
 
 # Add CORS to all requests
@@ -40,7 +42,7 @@ def welcome():
 
 if __name__ == '__main__':
    app.run(
-      debug=True,
+      debug=False,
       host="127.0.0.1",
       port=9001,
    )

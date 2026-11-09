@@ -2,6 +2,7 @@ import time
 import hashlib
 import string
 import random
+import secrets
 from datetime import date
 from flask import jsonify, Blueprint, request
 
@@ -88,7 +89,7 @@ def new_booking():
     booking_price = room.price * booking_duration_in_days
 
     # Generate random booking reference
-    booking_reference = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+    booking_reference = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(8))
 
     # Generate random confirmation secret
     random_string = str(int(time.time())) # get current timestamp in seconds
