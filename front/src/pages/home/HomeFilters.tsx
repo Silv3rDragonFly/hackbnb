@@ -43,17 +43,19 @@ export const HomeFilters = ({
 
     return <>
         <div className="flex items-center gap-10">
-            {filters.map(filter => <>
-                <div
-                    onClick={() => onSelectFilter(filter.name)} 
-                    role="button"
+            {filters.map(filter => (
+                <button
+                    key={filter.name}
+                    type="button"
+                    onClick={() => onSelectFilter(filter.name)}
+                    aria-pressed={filter.name === selectedFilter}
                     className={`flex flex-col items-center cursor-pointer border-b-1 py-1 ${filter.name === selectedFilter ? 'border-b-2 border-b-gray-100' : 'opacity-60 border-b-gray-50'}`}>
-                    <img src={filter.icon} width="24" style={{filter: "brightness(0) invert(1)"}} />
+                    <img src={filter.icon} width="24" alt="" style={{filter: "brightness(0) invert(1)"}} />
                     <div className="text-sm mt-2">
                         {filter.label}
                     </div>
-                </div>
-            </>)}
+                </button>
+            ))}
         </div>
     </>
 }
