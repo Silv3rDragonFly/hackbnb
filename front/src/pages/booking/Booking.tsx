@@ -28,9 +28,9 @@ export const BookingPage = () => {
     useEffect(() => {
         // Mark booking as paid in API
         if (searchParams.has("checkout_confirmation_secret")) {
-            confirmBookingCheckout(searchParams.get("checkout_confirmation_secret")!)
+            void confirmBookingCheckout(searchParams.get("checkout_confirmation_secret")!)
         } else {
-            reloadBookingDetails()
+            void reloadBookingDetails()
         }
     }, [])
 

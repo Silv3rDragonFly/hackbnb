@@ -31,7 +31,7 @@ export const HomePage = () => {
     }
 
     useEffect(() => {
-        reloadRooms()
+        void reloadRooms()
     }, [category])
 
     return <>

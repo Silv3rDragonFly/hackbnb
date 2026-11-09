@@ -19,7 +19,7 @@ export const HeaderProfile = () => {
     }
 
     useEffect(() => {
-        reloadCurrentUserDetails()
+        void reloadCurrentUserDetails()
     }, [])
 
     return <>

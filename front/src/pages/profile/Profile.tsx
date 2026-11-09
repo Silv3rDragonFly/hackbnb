@@ -14,7 +14,7 @@ export const ProfilePage = () => {
     }
 
     useEffect(() => {
-        reloadCurrentUserDetails()
+        void reloadCurrentUserDetails()
     }, [])
 
     return <>

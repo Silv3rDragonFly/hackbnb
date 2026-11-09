@@ -20,7 +20,7 @@ export const RoomPage = () => {
     }
 
     useEffect(() => {
-        reloadRoomDetails()
+        void reloadRoomDetails()
     }, [])
 
     const onSubmit = async (event: FormEvent) => {
