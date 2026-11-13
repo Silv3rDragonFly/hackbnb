@@ -19,6 +19,13 @@ csrf = CSRFProtect()
 csrf.init_app(app)
 app.config.from_pyfile('config.py')
 
+# back/app.py, après csrf.init_app(app)
+csrf.exempt(rooms_api)
+csrf.exempt(users_api)
+csrf.exempt(auth_api)
+csrf.exempt(bookings_api)
+csrf.exempt(uploads_api)
+
 # Add CORS to all requests
 CORS(app, origins=app.config["CORS_ORIGINS"])
 
