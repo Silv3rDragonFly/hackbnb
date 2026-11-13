@@ -2,6 +2,7 @@ from typing import List
 from hashlib import sha512
 from database.init import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -20,11 +21,16 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "email": self.email,
-        }
+    }
 
-    def set_password(self, clear_password: str):
-        self.password_hash = sha512(clear_password.encode("utf-8")).hexdigest()
+    def to_public_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
     
+    def set_password(self, clear_password: str):
+        self.password_hash = generate_password_hash(clear_password)
+
     def is_valid_password(self, clear_password: str) -> bool:
-        clear_password_hash = sha512(clear_password.encode("utf-8")).hexdigest()
-        return clear_password_hash == self.password_hash
+        return check_password_hash(self.password_hash, clear_password)

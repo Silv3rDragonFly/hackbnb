@@ -1,2 +1,2 @@
 apache2ctl -D FOREGROUND &
-python3 app.py
+gunicorn --bind 127.0.0.1:9001 app:app

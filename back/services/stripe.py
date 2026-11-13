@@ -29,7 +29,9 @@ def create_checkout(reference, name, unit_price, quantity, confirmation_secret):
     )
 
 def get_checkout_lines(checkout_session_id):
-    url = f"https://api.stripe.com/v1/checkout/sessions/{checkout_session_id}/line_items"
+    stripe.api_key = os.getenv('STRIPE_API_KEY')
+    session = stripe.checkout.Session.retrieve(checkout_session_id)
+    return stripe.checkout.Session.list_line_items(checkout_session_id)["data"]
 
     session = requests.Session()
     session.auth = (os.getenv('STRIPE_API_KEY'), "")

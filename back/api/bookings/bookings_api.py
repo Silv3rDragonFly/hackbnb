@@ -41,6 +41,9 @@ def get_booking_checkout_lines(reference: str):
     if not booking.is_paid:
         return {'error': 'Cannot get checkout lines without payment'}, 422
 
+    if checkout_session_id != booking.stripe_checkout_session_id:
+        return {'error': 'Invalid checkout session ID'}, 422
+
     try:
         checkout_session_id = request.args.get("checkout_session_id")
         return jsonify(get_checkout_lines(checkout_session_id))
@@ -89,8 +92,7 @@ def new_booking():
     booking_price = room.price * booking_duration_in_days
 
     # Generate random booking reference
-    booking_reference = ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(8))
-
+    booking_reference = checkout_confirmation_secret = secrets.token_urlsafe(32)
     # Generate random confirmation secret
     random_string = str(int(time.time())) # get current timestamp in seconds
     checkout_confirmation_secret = hashlib.sha512(random_string.encode('utf-8')).hexdigest() # hash it with safe sha512

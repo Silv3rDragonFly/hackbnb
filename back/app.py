@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from database.init import db
 from database.seed import seed_database
+from flask_wtf.csrf import CSRFProtect
 
 from api.rooms.rooms_models import Room
 from api.rooms.rooms_api import rooms_api
@@ -20,6 +21,14 @@ app.config.from_pyfile('config.py')
 
 # Add CORS to all requests
 CORS(app, origins=app.config["CORS_ORIGINS"])
+
+@app.after_request
+def set_security_headers(response):
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    return response
 
 # Initialize database
 db.init_app(app)
